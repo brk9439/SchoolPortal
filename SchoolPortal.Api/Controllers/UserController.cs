@@ -4,6 +4,8 @@ using SchoolPortal.Business.User.Model.Request;
 
 namespace SchoolPortal.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UserController : Controller
     {
         private readonly IUserBusiness _userBusiness;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SchoolPortal.Business.School.Model.Request;
 using SchoolPortal.Infrastruct.Domain.Context;
 using SchoolPortal.Infrastruct.Domain.Entities;
@@ -15,6 +16,7 @@ namespace SchoolPortal.Business.School
     public interface ISchoolBusiness
     {
         public Task<BaseResponseModel<object>> CreateSchool(RequestCreateSchool requestCreateSchool);
+        public  Task<BaseResponseModel<object>> GetSchoolList();
     }
     public class SchoolBusiness : ISchoolBusiness
     {
@@ -40,7 +42,25 @@ namespace SchoolPortal.Business.School
             _schoolPortalDbContext.SaveChanges();
 
 
-            return new BaseResponseModel<object> { Data = school, Message = "Okul kayıt işlemi başarılı", StatusCode = HttpStatusCode.OK };
+            var response = new BaseResponseModel<object>()
+            {
+                Data = school,
+                Message = "Okul Kayıt işlemi başarılı",
+                StatusCode = HttpStatusCode.OK
+            };
+            return response;
+
+        }
+
+        public async Task<BaseResponseModel<object>> GetSchoolList()
+        {
+            var response = new BaseResponseModel<object>
+            {
+                Data = await _schoolPortalDbContext.SchoolDetail.Where(x => x.Status == Enum.Status.Active).ToListAsync(),
+                Message = "Tüm okullar listelendi",
+                StatusCode = HttpStatusCode.OK
+            };
+            return response;
         }
     }
 }

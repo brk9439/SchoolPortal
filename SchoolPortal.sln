@@ -17,7 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolPortal.Business", "Sc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolPortal.Infrastruct", "SchoolPortal.Infrastruct\SchoolPortal.Infrastruct.csproj", "{61592B3F-0B17-46ED-A4A7-C9021AE009B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolPortal.Shared.Common", "SchoolPortal.Shared.Common\SchoolPortal.Shared.Common.csproj", "{5AEE73F1-6AA2-4470-BE0B-B5CD5B60E8A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolPortal.Shared.Common", "SchoolPortal.Shared.Common\SchoolPortal.Shared.Common.csproj", "{5AEE73F1-6AA2-4470-BE0B-B5CD5B60E8A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3AD5EC5E-29E7-42DE-A065-0B158DA82407}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

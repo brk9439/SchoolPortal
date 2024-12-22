@@ -27,23 +27,23 @@ namespace SchoolPortal.Business.User
         }
         public async Task<BaseResponseModel<object>> CreateUser(RequestCreateUser requestCreateUser)
         {
-            UserInfo userInfo = new UserInfo
-            {
-                Guid = Guid.NewGuid(),
-                UserType = Enum.UserType.Admin,
-                CreateDate = DateTime.UtcNow,
-                Status = Enum.Status.Active,
-                ExpireDate = DateTime.UtcNow.AddDays(25),
-                RefreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)),
-                Username = requestCreateUser.UserName,
-                Password = requestCreateUser.Password,
-                Phone = requestCreateUser.Phone,
-                Phone2 = requestCreateUser.Phone2,
-                FK_SchoolDetail = requestCreateUser.FK_SchoolDetail.Value
+            UserInfo userInfo = new UserInfo();
 
-            };
-            await _schoolDbContext.UserInfo.AddAsync(userInfo);
-            await _schoolDbContext.SaveChangesAsync();
+            userInfo.Guid = Guid.NewGuid();
+                userInfo.UserType = Enum.UserType.Admin;
+                userInfo.CreateDate = DateTime.UtcNow;
+                userInfo.Status = Enum.Status.Active;
+                userInfo.ExpireDate = DateTime.UtcNow.AddDays(25);
+                userInfo.RefreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+                userInfo.Username = requestCreateUser.UserName;
+                userInfo.Password = requestCreateUser.Password;
+                userInfo.Phone = requestCreateUser.Phone;
+                userInfo.Phone2 = requestCreateUser.Phone2;
+                userInfo.FK_SchoolDetail = requestCreateUser.FK_SchoolDetail.Value;
+
+            
+             _schoolDbContext.UserInfo.Add(userInfo);
+             _schoolDbContext.SaveChanges();
 
 
             return new BaseResponseModel<object>

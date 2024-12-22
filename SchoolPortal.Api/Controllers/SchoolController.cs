@@ -17,7 +17,14 @@ namespace SchoolPortal.Api.Controllers
         [HttpPost("CreateSchool")]
         public async Task<IActionResult> CreateSchool(RequestCreateSchool requestCreateSchool)
         {
-            return Ok(_schoolBusiness.CreateSchool(requestCreateSchool));
+
+            return Ok(await _schoolBusiness.CreateSchool(requestCreateSchool));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetSchoolList()
+        {
+            return Ok(await _schoolBusiness.GetSchoolList());
         }
     }
 }

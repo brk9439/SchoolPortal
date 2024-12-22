@@ -11,18 +11,17 @@ namespace SchoolPortal.Business.User.Model.Request
     {
         [Required(ErrorMessage = "Kullanıcı alanı boş geçilemez")]
         [ScaffoldColumn(true)]
-        [StringLength(25,ErrorMessage = "Karakter sayısı en fazla 25 olabilir")]
+        [StringLength(25,MinimumLength = 3,ErrorMessage = "Karakter sayısı en fazla 25 olabilir")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Şifre alanı boş geçilemez")]
-        [ScaffoldColumn(true)]
-        [StringLength(10, ErrorMessage = "Karakter sayısı en fazla 10 olabilir")]
+        [StringLength(10, MinimumLength = 4, ErrorMessage = "Karakter sayısı en fazla 10 olabilir")]
         public string Password { get; set; }
-        [DataType(DataType.EmailAddress, ErrorMessage = "Lütfen geçerli mail adresi giriniz")]
+        [EmailAddress(ErrorMessage = "Lütfen geçerli mail adresi giriniz")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Telefon numarası boş geçilemez")]
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Lütfen geçerli telefon numarası giriniz")]
+        [Phone(ErrorMessage = "Lütfen geçerli telefon numarası giriniz")]
         public string Phone { get; set; }
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Lütfen geçerli telefon numarası giriniz")]
+        [Phone(ErrorMessage = "Lütfen geçerli telefon numarası giriniz")]
         public string? Phone2 { get; set; }
         public Guid? FK_SchoolDetail { get; set; }
         

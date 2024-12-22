@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using SchoolPortal.Business.Account.Model;
 using SchoolPortal.Infrastruct.Domain.Context;
 using SchoolPortal.Infrastruct.Domain.Entities;
 using SchoolPortal.Shared.Common;
@@ -11,48 +12,45 @@ using Enum = SchoolPortal.Infrastruct.Domain.Entities.Enum;
 
 namespace SchoolPortal.Business.Account
 {
-	public interface IAccountBusiness
+    public interface IAccountBusiness
     {
-        public  Task<BaseResponseModel<object>> Login(string username, string password);
-
+        public Task<BaseResponseModel<object>> Login(RequestLogin requestLogin);
     }
-	public class AccountBusiness : IAccountBusiness
-	{
-		private readonly SchoolPortalDbContext _schoolDbContext;
+    public class AccountBusiness : IAccountBusiness
+    {
+        private readonly SchoolPortalDbContext _schoolDbContext;
 
-		public AccountBusiness(SchoolPortalDbContext schoolDbContext)
-		{
-			_schoolDbContext = schoolDbContext;
+        public AccountBusiness(SchoolPortalDbContext schoolDbContext)
+        {
+            _schoolDbContext = schoolDbContext;
 
-		}
+        }
 
-		public async Task<BaseResponseModel<object>> Login(string username, string password)
-		{
-			var userInfo = new UserInfo
-			{
-				CreateDate = DateTime.Now,
-				ExpireDate = DateTime.Now.AddDays(45),
-				FK_SchoolDetail = new Guid(),
-				UpdateTime = DateTime.Now,
-				Guid = new Guid(),
-				Password = password,
-				Username = username,
-				Phone = "",
-				Phone2 = "",
-				Photo = "",
-				RefreshToken = "",
-				Status = Enum.Status.Active,
-				UserType = Enum.UserType.Admin
+        public async Task<BaseResponseModel<object>> Login(RequestLogin requestLogin)
+        {
+            var account = _schoolDbContext.UserInfo.Where(x =>
+                x.Phone == requestLogin.Phone && x.Password == requestLogin.Password &&
+                x.Status == Enum.Status.Active).ToList();
+            if (!account.Any() || account.Count()<1)
+            {
+                return new BaseResponseModel<object>
+                {
+                    Data = null,
+                    Message = "Kullanıcı adı veya şifre hatalı",
+                    StatusCode = HttpStatusCode.NotFound,
+                    Success = false
+                };
+            }
+            else
+            {
+                return new BaseResponseModel<object>
+                {
+                    Data = account.Select(x => new ResponseLogin { UserType = x.UserType, Username = x.Username, Id = x.Guid, Phone = x.Phone }),
+                    Message = "Başarılı",
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
 
-			};
-			_schoolDbContext.UserInfo.AddAsync(userInfo);
-			_schoolDbContext.SaveChangesAsync();
-
-			return new BaseResponseModel<object>
-			{
-				Message = "Message",
-				StatusCode = HttpStatusCode.OK
-			};
-		}
-	}
+        }
+    }
 }
