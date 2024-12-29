@@ -15,6 +15,11 @@ namespace SchoolPortal.Api.Controllers
         {
             _accountBusiness = accountBusiness;
         }
+        [HttpPost("ManagerLogin")]
+        public async Task<IActionResult> ManagerLogin(RequestManagerLogin requestManagerLogin)
+        {
+            return Ok(await _accountBusiness.ManagerLogin(requestManagerLogin));
+        }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(RequestLogin requestLogin)

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Configuration\" />
-    <Folder Include="School\Model\Response\" />
     <Folder Include="User\Model\Response\" />
   </ItemGroup>
 

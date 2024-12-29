@@ -10,6 +10,7 @@ namespace SchoolPortal.Business.Account.Model
     public class ResponseLogin
     {
         public Guid Id { get; set; }
+        public Guid SchoolId { get; set; }
         public string Username { get; set; }
         public string Phone { get; set; }
         public Enum.UserType UserType { get; set; }

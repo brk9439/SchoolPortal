@@ -17,7 +17,13 @@ namespace SchoolPortal.Api.Controllers
         public async Task<IActionResult> CreateUser(RequestCreateUser requestCreateUser)
         {
 
-            return Ok(_userBusiness.CreateUser(requestCreateUser));
+            return Ok(await _userBusiness.CreateUser(requestCreateUser));
+        }
+
+        [HttpPost("StudentRegister")]
+        public async Task<IActionResult> StudentRegister(RequestStudentRegister requestStudentRegister)
+        {
+            return Ok(await _userBusiness.StudentRegister(requestStudentRegister));
         }
     }
 }

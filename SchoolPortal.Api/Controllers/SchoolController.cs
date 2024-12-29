@@ -26,5 +26,17 @@ namespace SchoolPortal.Api.Controllers
         {
             return Ok(await _schoolBusiness.GetSchoolList());
         }
+        [HttpGet("SchoolInfo/{id}")]
+        public async Task<IActionResult> SchoolInfo(Guid id)
+        {
+            return Ok(await _schoolBusiness.SchoolInfo(id));
+        }
+
+        [HttpGet("GetStudentList/{schoolId}")]
+        public async Task<IActionResult> GetStudentList(Guid schoolId)
+        {
+            return Ok(await _schoolBusiness.GetStudentList(schoolId));
+        }
+
     }
 }
